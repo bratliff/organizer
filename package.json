@@ -1,0 +1,30 @@
+{
+  "name": "react-server-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Note.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel js -d built",
+    "start" : "open http://localhost:4000 & httpster -p 4000"
+  },
+  "babel": {
+    "presets": [
+      "react"
+    ]
+  },
+  "keywords": [
+    "react",
+    "javascript",
+    "bulletin"
+  ],
+  "author": "Ben Ratliff",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.5.1",
+    "babel-preset-react": "^6.5.0"
+  },
+  "dependencies": {
+    "httpster": "^1.0.3"
+  }
+}
