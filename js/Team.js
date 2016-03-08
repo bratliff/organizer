@@ -13,16 +13,15 @@ var Team = React.createClass({
         var leftPos = 0;
         var color = this.generatecolor();
         $(this.getDOMNode()).css({'border':'3px solid' + color});
-        var $thisNode = $(this.getDOMNode());
-        console.log($thisNode[0].textContent);
+
 
         $(this.getDOMNode()).draggable().droppable({
             drop:function(event, ui){
                 var dropped = ui.draggable[0];
                 var bordercolor = $(event.target).css('border-left-color');
                 $(dropped).css({'border':'2px solid','border-color':bordercolor});
-                //$(dropped).find('.team').html($thisNode[0].textContent);
-                this.refs.teamname.getDOMNode().setState({teamname: $thisNode[0].textContent});
+                $thisNode = $(event.target);
+                $('.teamname').html($thisNode[0].textContent)
                 ui.draggable.data('dropped', true);
             },
             out: function(event, ui){

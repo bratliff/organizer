@@ -2,7 +2,7 @@ var Note = React.createClass({
     displayName: 'Note',
 
     getInitialState: function () {
-        return { editing: false, firstname: 'First', lastname: 'Last', teamname: "Team Name" };
+        return { editing: false, firstname: 'First', lastname: 'Last' };
     },
     componentWillMount: function () {
         this.style = {
@@ -31,7 +31,6 @@ var Note = React.createClass({
         this.setState({ editing: true });
     },
     save: function () {
-        //this.props.onChange(this.refs.lastname.getDOMNode().value, this.props.index);
         this.setState({ editing: false, firstname: this.refs.firstname.getDOMNode().value,
             lastname: this.refs.lastname.getDOMNode().value });
     },
@@ -50,11 +49,7 @@ var Note = React.createClass({
                 ' ',
                 this.state.lastname
             ),
-            React.createElement(
-                'p',
-                { className: 'team', ref: 'team' },
-                this.state.teamname
-            ),
+            React.createElement('p', { className: 'teamname' }),
             React.createElement(
                 'span',
                 null,
