@@ -22,9 +22,9 @@ var Board = React.createClass({
         return this.uniqueId++;
     },
     componentWillMount: function () {
-        //var self = this;
+        var self = this;
     },
-    add: function (text) {
+    addNote: function (text) {
         var arr = this.state.notes;
         arr.push({
             id: this.nextId(),
@@ -32,25 +32,41 @@ var Board = React.createClass({
         });
         this.setState({ notes: arr });
     },
-    update: function (firstname, i) {
+    addTeam: function (text) {
+        var teamArr = this.state.teams;
+        teamArr.push({
+            id: this.nextId(),
+            team: text
+        });
+        this.setState({ teams: teamArr });
+    },
+    updateNote: function (firstname, i) {
         var arr = this.state.notes;
         arr[i].note = firstname;
         this.setState({ notes: arr });
-        var teamarr = this.state.team;
-        teamarr[i].team = teamname;
     },
-    remove: function (i) {
+    removeNote: function (i) {
         var arr = this.state.notes;
         arr.splice(i, 1);
         this.setState({ notes: arr });
+    },
+    updateTeam: function (firstname, i) {
+        var arr = this.state.teams;
+        arr[i].team = teamname;
+        this.setState({ teams: arr });
+    },
+    removeTeam: function (i) {
+        var arr = this.state.teams;
+        arr.splice(i, 1);
+        this.setState({ teams: arr });
     },
     eachNote: function (note, i) {
         return React.createElement(
             Note,
             { key: note.id,
                 index: i,
-                onChange: this.update,
-                onRemove: this.remove
+                onChange: this.updateNote,
+                onRemove: this.removeNote
             },
             note.note
         );
@@ -60,10 +76,10 @@ var Board = React.createClass({
             Team,
             { key: team.id,
                 index: i,
-                onChange: this.update,
-                onRemove: this.remove
+                onChange: this.updateTeam,
+                onRemove: this.removeTeam
             },
-            note.note
+            team.team
         );
     },
     render: function () {
@@ -71,8 +87,32 @@ var Board = React.createClass({
             "div",
             { className: "board" },
             this.state.notes.map(this.eachNote),
+            React.createElement(
+                "h3",
+                null,
+                "Add a team member"
+            ),
             React.createElement("button", { className: "btn btn-sm btn-success glyphicon glyphicon-plus",
-                onClick: this.add.bind(null, "New Note") })
+                onClick: this.addNote.bind(null, "New Note") }),
+            React.createElement("br", null),
+            React.createElement(
+                "h3",
+                null,
+                "Add a team"
+            ),
+            React.createElement("br", null),
+            this.state.teams.map(this.eachTeam),
+            React.createElement("button", { className: "btn btn-sm btn-success glyphicon glyphicon-plus",
+                onClick: this.addTeam.bind(null, "New Team") }),
+            React.createElement(
+                "div",
+                { className: "noteam" },
+                React.createElement(
+                    "h3",
+                    null,
+                    "Unassigned"
+                )
+            )
         );
     }
 });

@@ -20,9 +20,9 @@ var Board = React.createClass({
         return this.uniqueId++;
     },
     componentWillMount: function() {
-        //var self = this;
+        var self = this;
     },
-    add: function(text) {
+    addNote: function(text) {
         var arr = this.state.notes;
         arr.push({
             id: this.nextId(),
@@ -30,24 +30,40 @@ var Board = React.createClass({
         });
         this.setState({notes: arr});
     },
-    update: function(firstname, i) {
+    addTeam: function(text) {
+        var teamArr = this.state.teams;
+        teamArr.push({
+            id: this.nextId(),
+            team: text
+        });
+        this.setState({teams: teamArr});
+    },
+    updateNote: function(firstname, i) {
         var arr = this.state.notes;
         arr[i].note = firstname;
         this.setState({notes:arr});
-        var teamarr = this.state.team;
-        teamarr[i].team = teamname;
     },
-    remove: function(i) {
+    removeNote: function(i) {
         var arr = this.state.notes;
         arr.splice(i, 1);
         this.setState({notes: arr});
+    },
+    updateTeam: function(firstname, i) {
+        var arr = this.state.teams;
+        arr[i].team = teamname;
+        this.setState({teams:arr});
+    },
+    removeTeam: function(i) {
+        var arr = this.state.teams;
+        arr.splice(i, 1);
+        this.setState({teams: arr});
     },
     eachNote: function(note, i) {
         return (
                 <Note key={note.id}
                     index={i}
-                    onChange={this.update}
-                    onRemove={this.remove}
+                    onChange={this.updateNote}
+                    onRemove={this.removeNote}
                 >{note.note}</Note>
             );
     },
@@ -55,16 +71,22 @@ var Board = React.createClass({
         return (
                 <Team key={team.id}
                     index={i}
-                    onChange={this.update}
-                    onRemove={this.remove}
-                >{note.note}</Team>
+                    onChange={this.updateTeam}
+                    onRemove={this.removeTeam}
+                >{team.team}</Team>
             );
     },
     render: function() {
         return (<div className="board">
                     {this.state.notes.map(this.eachNote)}
+                    <h3>Add a team member</h3>
                     <button className="btn btn-sm btn-success glyphicon glyphicon-plus"
-                            onClick={this.add.bind(null, "New Note")}/>
+                            onClick={this.addNote.bind(null, "New Note")}/><br/>
+                    <h3>Add a team</h3><br/>
+                    {this.state.teams.map(this.eachTeam)}
+                    <button className="btn btn-sm btn-success glyphicon glyphicon-plus"
+                            onClick={this.addTeam.bind(null, "New Team")}/>
+                    <div className="noteam"><h3>Unassigned</h3></div>
             </div>
 
         );

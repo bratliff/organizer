@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel js -d built",
-    "start" : "open http://localhost:4000 & httpster -p 4000"
+    "start": "open http://localhost:4000 & httpster -p 4000",
+    "build-css": "node-sass --include-path scss css/style.scss css/style.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\""
   },
   "babel": {
     "presets": [
@@ -22,7 +24,9 @@
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.5.1",
-    "babel-preset-react": "^6.5.0"
+    "babel-preset-react": "^6.5.0",
+    "node-sass": "^3.4.2",
+    "nodemon": "^1.9.1"
   },
   "dependencies": {
     "httpster": "^1.0.3"

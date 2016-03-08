@@ -1,15 +1,26 @@
 var Note = React.createClass({
     getInitialState: function() {
-        return {editing: false, firstname: 'first', lastname: 'last'}
+        return {editing: false, firstname: 'First', lastname: 'Last', teamname: "Team Name"}
     },
     componentWillMount: function() {
         this.style = {
-            right: this.randomBetween(0, window.innerWidth - 150) + 'px',
+            right: '30px',
             top: this.randomBetween(0, window.innerHeight - 150) + 'px'
         };
     },
     componentDidMount: function(){
-        $(this.getDOMNode()).draggable();
+        var _that = this;
+        $(this.getDOMNode()).draggable({
+            revert:false,
+            start:function(event,ui) {
+                ui.helper.data('dropped', false)
+            },
+            stop:function(event, ui) {
+                if(ui.helper.data('dropped') == false) {
+                    //$('.board').append(this);
+                }
+            }
+        });
     },
     randomBetween: function(min, max) {
         return (min + Math.ceil(Math.random() * max));
@@ -28,9 +39,9 @@ var Note = React.createClass({
     renderDisplay: function() {
         return (
             <div className="note"
-                style={this.style}>
-                <p>{this.state.firstname}</p>
-                <p>{this.state.lastname}</p>
+                style={this.style} index={this.index}>
+                <p>{this.state.firstname} {this.state.lastname}</p>
+                <p className="team" ref="team">{this.state.teamname}</p>
                 <span>
                     <button onClick={this.edit}
                             className="btn btn-primary glyphicon glyphicon-pencil"/>

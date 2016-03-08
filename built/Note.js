@@ -2,16 +2,27 @@ var Note = React.createClass({
     displayName: 'Note',
 
     getInitialState: function () {
-        return { editing: false, firstname: 'first', lastname: 'last' };
+        return { editing: false, firstname: 'First', lastname: 'Last', teamname: "Team Name" };
     },
     componentWillMount: function () {
         this.style = {
-            right: this.randomBetween(0, window.innerWidth - 150) + 'px',
+            right: '30px',
             top: this.randomBetween(0, window.innerHeight - 150) + 'px'
         };
     },
     componentDidMount: function () {
-        $(this.getDOMNode()).draggable();
+        var _that = this;
+        $(this.getDOMNode()).draggable({
+            revert: false,
+            start: function (event, ui) {
+                ui.helper.data('dropped', false);
+            },
+            stop: function (event, ui) {
+                if (ui.helper.data('dropped') == false) {
+                    //$('.board').append(this);
+                }
+            }
+        });
     },
     randomBetween: function (min, max) {
         return min + Math.ceil(Math.random() * max);
@@ -31,16 +42,18 @@ var Note = React.createClass({
         return React.createElement(
             'div',
             { className: 'note',
-                style: this.style },
+                style: this.style, index: this.index },
             React.createElement(
                 'p',
                 null,
-                this.state.firstname
+                this.state.firstname,
+                ' ',
+                this.state.lastname
             ),
             React.createElement(
                 'p',
-                null,
-                this.state.lastname
+                { className: 'team', ref: 'team' },
+                this.state.teamname
             ),
             React.createElement(
                 'span',
